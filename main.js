@@ -27,7 +27,7 @@ var deckOfCards = {
 }
 function init(){
 	$('#start').click(startGame);
-	$('#hit').click(dealCards);
+	$('#hit').click(playerHit);
 	$('#stand').click(playerStand);
 }
 
@@ -70,11 +70,12 @@ function dealCards(){
 			console.log("dealer");
 		}
 		console.log(card);
+		updateScore();
 	}
 }
 function playerHit(){
 	var i = Math.floor(Math.random()*deck.length);
-	var arr = cards.splice(i, 1);
+	var arr = deck.splice(i, 1);
 	for (var j=0; j<arr.length; j++) {
 		playersHand.push(arr[j]);
 	}
@@ -135,4 +136,20 @@ function updateScore() {
 	});
 	checkForWin();
 	console.log('Player score:',playersScore, 'Dealer score:',dealersScore);
+}
+
+function checkForWin(){
+	if (playersScore === 21) {
+		alert("You win!");
+	}
+	if (playersScore > 21) {
+		alert("Sorry you busted!");
+	}
+	if (playerStand) {
+		if (playersScore > dealersScore) {
+			alert("You won!");
+		} else {
+			alert("You lose!");
+		}
+	}
 }
